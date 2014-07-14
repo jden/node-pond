@@ -3,7 +3,9 @@
   "author": "jden <jason@denizac.org>",
   "version": "0.1.0",
   "description": "get user media experiment",
-  "keywords": ["picture chat kinda"],
+  "keywords": [
+    "picture chat kinda"
+  ],
   "main": "index.js",
   "scripts": {
     "test": "mocha"
@@ -12,6 +14,19 @@
   "license": "ISC",
   "readmeFilename": "README.md",
   "devDependencies": {
-    "mochi": "0.1.0"
+    "mochi": "0.1.0",
+    "watchify": "^0.10.2",
+    "gulp": "^3.8.6",
+    "browserify": "^4.2.0",
+    "opener": "^1.3.0",
+    "es6ify": "^1.2.0",
+    "vinyl-source-stream": "^0.1.1",
+    "http-server": "^0.6.1",
+    "portfinder": "^0.2.1",
+    "del": "^0.1.1"
+  },
+  "dependencies": {
+    "gumhelper": "0.0.6",
+    "rtc-quickconnect": "^2.2.0"
   }
 }
