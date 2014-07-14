@@ -27,6 +27,7 @@
   },
   "dependencies": {
     "gumhelper": "0.0.6",
-    "rtc-quickconnect": "^2.2.0"
+    "rtc-quickconnect": "^2.2.0",
+    "socket.io-client": "^1.0.6"
   }
 }

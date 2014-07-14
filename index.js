@@ -1,9 +1,9 @@
 var gum = require('gumhelper')
-var quickconnect = require('rtc-quickconnect')
+var socketio = require('socket.io-client')
 
 var $msg = document.getElementById('msg')
 var $input = document.getElementById('input')
-
+var waiting = true
 $input.focus()
 
 gum.startVideoStreaming(function (err, stream, el) {
@@ -17,22 +17,28 @@ gum.startVideoStreaming(function (err, stream, el) {
 })
 
 
+function getRoom() {
+  if (!window.location.hash) {
+    window.location.hash = encodeURIComponent(prompt('enter a room name'))
+  }
+  return 'jden-pond-' + window.location.hash.substr(1)
+}
 
 function send(x) {
   send._(x)
 }
 send._ = function () {
-  console.log('noop')
+  // console.log('noop')
 }
 
-quickconnect('http://rtc.io/switchboard/', {room: 'jden-pond-asdf'})
-  .createDataChannel('selfies')
-  .on('channel:opened', function (id, dc) {
-    incoming('')
-    console.log('opened', arguments)
-    dc.onmessage = incoming
+var saddr = 'http://rooms-a.herokuapp.com/'
+console.log(saddr)
+var socket = socketio(saddr)
+  .on('connect', function () {
+    socket.emit('rm', getRoom())
 
-    send._ = dc.send.bind(dc)
+    socket.on('message', incoming)
+    send._ = socket.emit.bind(socket, 'message')
   })
 
 var canvas = document.getElementById('still')
@@ -44,7 +50,7 @@ function getSnapshot(cb) {
   canvas.width = x
   canvas.height = y
 
-  console.log('getSnapshot', video)
+  // console.log('getSnapshot', video)
   context.drawImage(video, 0, 0, x, y)
   var d = canvas.toDataURL('image/png')
 // console.log(d.length, d)
@@ -65,23 +71,28 @@ function incomingPic(e) {
   // them.style.opacity = 1
   
 
-  console.log('incoming pic')
+  // console.log('incoming pic')
   // them.style.backgroundImage = 'url(' + e.data + ')'
-  document.body.style.backgroundImage = 'url(' + e.data + ')'
+  document.body.style.backgroundImage = 'url(' + e + ')'
 }
 
 function incomingMsg(e) {
-  msg.textContent = e.data
+  msg.textContent = e
 }
 
-function incoming(e) {
-  if (!e || !e.data) {
+function incoming(data) {
+  if (waiting) {
+    waiting = false
+    $msg.textContent = ''
+  }
+
+  if (typeof data !== 'string') {
     return
   }
-  if (e.data.indexOf('data:image/png') === 0) {
-    incomingPic(e)
+  if (data.indexOf('data:image/png') === 0) {
+    incomingPic(data)
   } else {
-    incomingMsg (e)
+    incomingMsg (data)
   }
 }
 
@@ -96,7 +107,7 @@ setInterval(function () {
     send(data)
     // document.body.style.backgroundImage = 'url(' + data + ')'
   })
-}, 1000)
+}, 1500)
 
 // var t = [document.getElementById('them0'), document.getElementById('them1')]
 // setInterval(function () {
