@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>connecting...</title>
+    <meta charset="utf-8" />
+    <style type="text/css">
+
+body{
+  background: #334 no-repeat center center fixed;
+  background-repeat: no-repeat;
+  background-size: cover;
+}
+
+#youbox{
+  position: absolute;
+  top: 0;
+  right: 0;
+  height: 100px;
+  width: 100px;
+  border-radius: 100px;
+  overflow:hidden;
+}
+#you{
+  height: 100px;
+}
+
+#them1, #them2{
+  position: absolute;
+  opacity: 0;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background: #334 no-repeat center center fixed;
+  background-repeat: no-repeat;
+  background-size: cover;
+}
+
+#still{
+  display: none;
+}
+
+h1{
+  position: absolute;
+  bottom: 30px;
+  font-family: sans-serif;
+  font-size: 72px;
+  text-align: center;
+  width: 100%;
+  margin: 0;
+  padding: 0;
+  left: 0;
+  text-shadow: 1px 1px 1px white;
+}
+#input{
+  background: transparent;
+  border: 0;
+  border-bottom: 2px solid white;
+  color: white;
+  font-size: 18px;
+  outline: 0;
+}
+
+    </style>
+  </head>
+  <body>
+    <h1 id="msg">...</h1>
+    <div id="them0"></div>
+    <div id="them1"></div>
+    <input type="text" id="input"/>
+    <div id="youbox"></div>
+    <canvas id="still"></canvas>
+    <script src="app.js"></script>
+  </body>
+</html>

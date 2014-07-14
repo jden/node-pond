@@ -12,7 +12,7 @@ gum.startVideoStreaming(function (err, stream, el) {
     return
   }
   el.id = 'you'
-  document.body.appendChild(el)
+  document.getElementById('youbox').appendChild(el)
   el.play()
 })
 
